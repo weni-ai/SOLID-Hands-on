@@ -1,4 +1,3 @@
-
 from attendants import Attendant
 from books import Book
 from clients import Client
