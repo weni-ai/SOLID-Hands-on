@@ -64,7 +64,7 @@ class Database:
     def create_attendenant(self, attendant):
         self.attendants.append(attendant)
         print(f"[ * ] adding {attendant.name}")
-    
+
     def rent_book(self, id_book, id_client, id_attendant, price, type):
         self.getted_books.append(
             dict(
