@@ -1,5 +1,12 @@
-class Book:
-    def __init__(self, title, description, pages, gender, id):
+class Database:
+    books = []
+    clients = []
+    attendants = []
+    getted_books = []
+    
+
+class Book(Database):
+    def __init__(self, title: str, description: str, pages: int, gender: str, id: str):
         self.title = title
         self.description = description
         self.pages = pages
@@ -12,9 +19,23 @@ class Book:
     def to_str(self):
         return f"title: {self.title}, description: {self.description}, pages: {self.pages}, gender: {self.gender}"
 
+    def create_book(self):
+        super().books.append(self)
+        print(f"[ * ] adding {self.title}")
 
-class Client:
-    def __init__(self, name, cpf, age, cell_number, email, id):
+    def rent_book(self, id_book, id_client, id_attendant, price, type):
+        super().getted_books.append(
+            dict(
+                id_book=self.id_book,
+                id_attendant=self.id_attendant,
+                id_client=self.id_client,
+                price=self.price,
+                type=self.type
+            )
+        )
+
+class Client(Database):
+    def __init__(self, name: str, cpf: str, age: int, cell_number: int, email: str, id: str):
         self.name = name
         self.cpf = cpf
         self.age = age
@@ -28,8 +49,11 @@ class Client:
     def to_str(self):
         return f"name: {self.name}, cpf: {self.cpf}, age: {self.age}, cell_number: {self.cell_number}, email: {self.email}"
 
+    def create_client(self):
+        super().clients.append(self)
+        print(f'[ * ] adding {self.name}')
 
-class Attendant:
+class Attendant(Database):
     def __init__(self, name, cpf, age, cell_number, email, salary, id):
         self.name = name
         self.cpf = cpf
@@ -45,36 +69,10 @@ class Attendant:
     def to_str(self):
         return f"name: {self.name}, cpf: {self.cpf}, age: {self.age}, cell_number: {self.cell_number}, email: {self.email}, salary: {self.salary}"
 
+    def create_attendenant(self):
+        super().attendants.append(self)
+        print(f"[ * ] adding {self.name}")
 
-class Database:
-
-    books = []
-    clients = []
-    attendants = []
-    getted_books = []
-
-    def create_client(self, client):
-        self.clients.append(client)
-        print(f'[ * ] adding {client.name}')
-
-    def create_book(self, book):
-        self.books.append(book)
-        print(f"[ * ] adding {book.title}")
-
-    def create_attendenant(self, attendant):
-        self.attendants.append(attendant)
-        print(f"[ * ] adding {attendant.name}")
-    
-    def rent_book(self, id_book, id_client, id_attendant, price, type):
-        self.getted_books.append(
-            dict(
-                id_book=id_book,
-                id_attendant=id_attendant,
-                id_client=id_client,
-                price=price,
-                type=type
-            )
-        )
 
 def main():
     pass
