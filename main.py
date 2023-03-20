@@ -1,83 +1,80 @@
+import uuid
+from dataclasses import dataclass
+from enum import Enum
+from abc import ABCMeta, abstractmethod
+
+#Pseudo Database
+class Database(metaclass=ABCMeta):
+
+    BOOKS = []
+    CLIENTS = []
+    ATTENDANTS = []
+    GETTED_BOOKS = []
+
+    @abstractmethod
+    def create(self):
+        raise NotImplementedError
+
+#Enums
+class BookGender(Enum):
+    ROMANCE = 'Romance'
+    DRAMA = 'Drama'
+    FICTION = 'Fiction'
+    FANTASY = 'Fantasy'
+    OTHER = 'Other'
+
+
+#Data
+@dataclass
 class Book:
-    def __init__(self, title, description, pages, gender, id):
-        self.title = title
-        self.description = description
-        self.pages = pages
-        self.gender = gender
-        self.id = id
+    title: str
+    description: str
+    pages: int
+    gender: BookGender
+    id: str = uuid.uuid4().hex
 
-    def to_json(self):
-        return dict(title=self.title, description=self.description, pages=self.pages, gender=self.gender)
+    def create(self, database: Database):
+        database.BOOKS.append(self)
+        print(f"[ * ] adding: {self}")
 
-    def to_str(self):
-        return f"title: {self.title}, description: {self.description}, pages: {self.pages}, gender: {self.gender}"
+    def rent(self, database: Database):
+        database.GETTED_BOOKS.append(self)
+        print(f"[ * ] adding: {self}")
 
-
+@dataclass
 class Client:
-    def __init__(self, name, cpf, age, cell_number, email, id):
-        self.name = name
-        self.cpf = cpf
-        self.age = age
-        self.cell_number = cell_number
-        self.email = email
-        self.id = id
+    name: str
+    cpf: str
+    age: int
+    cell_number: str
+    email: str
+    id: str = uuid.uuid4().hex
     
-    def to_json(self):
-        return dict(name=self.name, cpf=self.cpf, age=self.age, cell_number=self.cell_number, email=self.email)
+    def create(self, database: Database):
+        database.CLIENTS.append(self)
+        print(f"[ * ] adding: {self}")
 
-    def to_str(self):
-        return f"name: {self.name}, cpf: {self.cpf}, age: {self.age}, cell_number: {self.cell_number}, email: {self.email}"
-
-
+@dataclass
 class Attendant:
-    def __init__(self, name, cpf, age, cell_number, email, salary, id):
-        self.name = name
-        self.cpf = cpf
-        self.age = age
-        self.cell_number = cell_number
-        self.email = email
-        self.salary = salary
-        self.id = id
+    name:str
+    cpf: str
+    age: int
+    cell_number: str
+    email: str
+    salary: float
+    id: str = uuid.uuid4().hex
 
-    def to_json(self):
-        return dict(name=self.name, cpf=self.cpf, age=self.age, cell_number=self.cell_number, email=self.email, salary=self.salary)
-
-    def to_str(self):
-        return f"name: {self.name}, cpf: {self.cpf}, age: {self.age}, cell_number: {self.cell_number}, email: {self.email}, salary: {self.salary}"
-
-
-class Database:
-
-    books = []
-    clients = []
-    attendants = []
-    getted_books = []
-
-    def create_client(self, client):
-        self.clients.append(client)
-        print(f'[ * ] adding {client.name}')
-
-    def create_book(self, book):
-        self.books.append(book)
-        print(f"[ * ] adding {book.title}")
-
-    def create_attendenant(self, attendant):
-        self.attendants.append(attendant)
-        print(f"[ * ] adding {attendant.name}")
-    
-    def rent_book(self, id_book, id_client, id_attendant, price, type):
-        self.getted_books.append(
-            dict(
-                id_book=id_book,
-                id_attendant=id_attendant,
-                id_client=id_client,
-                price=price,
-                type=type
-            )
-        )
+    def create(self, database: Database):
+        database.ATTENDANTS.append(self)
+        print(f"[ * ] adding: {self}")
 
 def main():
     pass
+    # Example of Usage
+    # book1 = Book(title='Book1', description='Book', pages=10, gender=BookGender.FANTASY)
+    # book1.create(Database)
+    # book1.rent(Database)
+    # print(Database.BOOKS)
 
 
 if __name__ == "__main__":
