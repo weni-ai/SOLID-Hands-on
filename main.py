@@ -26,23 +26,23 @@ class BookGender(Enum):
 
 #Data
 @dataclass
-class Book(Database):
+class Book:
     title: str
     description: str
     pages: int
     gender: BookGender
     id: str = uuid.uuid4().hex
 
-    def create(self):
-        self.BOOKS.append(self)
+    def create(self, database: Database):
+        database.BOOKS.append(self)
         print(f"[ * ] adding: {self}")
 
-    def rent(self):
-        self.GETTED_BOOKS.append(self)
+    def rent(self, database: Database):
+        database.GETTED_BOOKS.append(self)
         print(f"[ * ] adding: {self}")
 
 @dataclass
-class Client(Database):
+class Client:
     name: str
     cpf: str
     age: int
@@ -50,12 +50,12 @@ class Client(Database):
     email: str
     id: str = uuid.uuid4().hex
     
-    def create(self):
-        self.CLIENTS.append(self)
+    def create(self, database: Database):
+        database.CLIENTS.append(self)
         print(f"[ * ] adding: {self}")
 
 @dataclass
-class Attendant(Database):
+class Attendant:
     name:str
     cpf: str
     age: int
@@ -64,17 +64,17 @@ class Attendant(Database):
     salary: float
     id: str = uuid.uuid4().hex
 
-    def create(self):
-        self.ATTENDANTS.append(self)
+    def create(self, database: Database):
+        database.ATTENDANTS.append(self)
         print(f"[ * ] adding: {self}")
 
 def main():
     pass
-
-    # Example of creating and renting a book
+    # Example of Usage
     # book1 = Book(title='Book1', description='Book', pages=10, gender=BookGender.FANTASY)
-    # book1.create()
-    # book1.rent()
+    # book1.create(Database)
+    # book1.rent(Database)
+    # print(Database.BOOKS)
 
 
 if __name__ == "__main__":
